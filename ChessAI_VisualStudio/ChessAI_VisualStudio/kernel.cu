@@ -5,28 +5,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-class Moves {
-private:
-    int board[8][8];
-
-public:
-    Moves() {
-        for (int row; row = 0; row++) {
-            for (int col; col = 0; col++) {
-                board[row][col] = 0;
-            }
-        }
-    }
-};
 
 class Board {
 private:
     int turn = 0;
-    int movesChecked = 0; 
-    Board *possibleMoves[1000];
-    Board *gameHistory[300];
-
-
+    int movesChecked = 0;
+    Board* possibleMoves[1000];
+    Board* gameHistory[300];
 
     //Move a piece and create a new board
     void movePiece(Board* currentBoard, int initialRow, int initialCol, int movedTooRow, int movedTooCol) {
@@ -50,10 +35,10 @@ private:
         }
     }
 
-    bool bishopCheck(int initRow, int initCol, int newRow, int newCol, bool white) {
+    bool moveCheck(int initRow, int initCol, int newRow, int newCol, bool white) {
         //Toggle between checking valid white and black moves
         int lowerBound;
-        int upperBound; 
+        int upperBound;
         if (!white) {
             lowerBound = 1;
             upperBound = 6;
@@ -62,7 +47,7 @@ private:
             lowerBound = 7;
             upperBound = 12;
         }
-        
+
         if (newCol >= 0 && newCol < 8) {
             if (board[newRow][newCol] == 0) {
                 Board* move1 = new Board(this, initRow, initCol, newRow, newCol);
@@ -79,16 +64,104 @@ private:
         }
     }
 
+    void moveRook(int row, int col, bool white) {
+        bool up = true;
+        bool down = true;
+        bool left = true;
+        bool right = true;
+
+        //Check Right
+        for (int newCol = col + 1; newCol < 8; newCol++) {
+            if (right) {
+                right = moveCheck(row, col, row, newCol, white);
+            }
+            else {
+                break;
+            }
+        }
+        //Check Left
+        for (int newCol = col - 1; newCol >= 0; newCol--) {
+            if (left) {
+                left = moveCheck(row, col, row, newCol, white);
+            }
+            else {
+                break;
+            }
+        }
+
+        //Check Down
+        for (int newRow = row - 1; newRow >= 0; newRow--) {
+            if (down) {
+                down = moveCheck(row, col, newRow, col, white);
+            }
+            else {
+                break;
+            }
+        }
+
+        //Check Up
+        for (int newRow = row + 1; newRow < 8; newRow++) {
+            if (up) {
+                up = moveCheck(row, col, newRow, col, white);
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    void moveBishop(int row, int col, bool white) {
+        bool upRight = true;
+        bool upLeft = true;
+        bool downRight = true;
+        bool downLeft = true;
+
+        //Check rows above current
+        for (int newRow = row + 1; newRow < 8; newRow++) {
+
+            int moveUpRightCol = col + (newRow - row);
+            int moveUpLeftCol = col - (newRow - row);
+
+            //UpRight
+            if (upRight) {
+                upRight = moveCheck(row, col, newRow, moveUpRightCol, white);
+            }
+
+            if (upLeft) {
+                upLeft = moveCheck(row, col, newRow, moveUpLeftCol, white);
+            }
+
+        }
+
+        //Check rows below current
+        for (int newRow = row - 1; newRow >= 0; newRow--) {
+
+            int moveDownRightCol = col + (row - newRow);
+            int moveDownLeftCol = col - (row - newRow);
+
+            //UpRight
+            if (downRight) {
+                downRight = moveCheck(row, col, newRow, moveDownRightCol, white);
+            }
+
+            if (downLeft) {
+                downLeft = moveCheck(row, col, newRow, moveDownLeftCol, white);
+            }
+
+        }
+    }
+
+
 public:
-    int board[8][8] = { 
+    int board[8][8] = {
         {1,2,3,4,5,3,2,1},
         {6,6,6,6,6,6,6,6},
         {0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
+        {7,8,9,10,11,0,0,0},
         {12,12,12,12,12,12,12,12},
-        {7,8,9,10,11,9,8,7}};
+        {7,8,9,10,11,9,8,7} };
 
     Board() {
         printBoard();
@@ -132,7 +205,7 @@ public:
             for (int row = 0; row < 8; row++) {
                 for (int col = 0; col < 8; col++) {
                     //Pawn
-                    if (getPositionAsChar(board[row][col]) == 'P' && row == 1) {
+                    if (getPositionAsChar(board[row][col]) == 'P' && row == 1 && board[row + 1][col] == 0) {
                         Board* move1 = new Board(this, row, col, row + 1, col);
                         Board* move2 = new Board(this, row, col, row + 2, col);
                     }
@@ -142,67 +215,54 @@ public:
 
                     //Knight
                     else if (getPositionAsChar(board[row][col]) == 'N') {
-                        Board* move1 = new Board(this, row, col, row + 2, col - 1);
-                        Board* move2 = new Board(this, row, col, row + 2, col + 1);
-                        Board* move3 = new Board(this, row, col, row - 1, col + 2);
-                        Board* move4 = new Board(this, row, col, row + 1, col + 2);
-                        Board* move5 = new Board(this, row, col, row - 2, col - 1);
-                        Board* move6 = new Board(this, row, col, row - 2, col + 1);
-                        Board* move7 = new Board(this, row, col, row - 1, col - 2);
-                        Board* move8 = new Board(this, row, col, row + 1, col - 2);
+                        moveCheck(row, col, row + 2, col - 1, white );
+                        moveCheck(row, col, row + 2, col + 1, white );
+                        moveCheck(row, col, row - 1, col + 2, white );
+                        moveCheck(row, col, row + 1, col + 2, white );
+                        moveCheck(row, col, row - 2, col - 1, white );
+                        moveCheck(row, col, row - 2, col + 1, white );
+                        moveCheck(row, col, row - 1, col - 2, white );
+                        moveCheck(row, col, row + 1, col - 2, white );
                     }
 
                     //Bishop
                     else if (getPositionAsChar(board[row][col]) == 'B') {
-                        bool upRight = true;
-                        bool upLeft = true;
-                        bool downRight = true;
-                        bool downLeft = true;
+                        moveBishop(row, col, white);
+                    }
 
-                        //Check rows above current
-                        for (int newRow = row+1; newRow < 8; newRow++) {
+                    //Rook
+                    else if (getPositionAsChar(board[row][col]) == 'R') {
+                        moveRook(row, col, white);
+                    }
 
-                            int moveUpRightCol = col + (newRow - row);
-                            int moveUpLeftCol = col - (newRow - row);
+                    //Queen
+                    else if (getPositionAsChar(board[row][col]) == 'Q') {
+                        moveRook(row, col, white);
+                        moveBishop(row, col, white);
+                    }
 
-                            //UpRight
-                            if (upRight) {
-                                upRight = bishopCheck(row, col, newRow, moveUpRightCol, white);
-                            }
-
-                            if (upLeft) {
-                                upLeft = bishopCheck(row, col, newRow, moveUpLeftCol, white);
-                            }
-
-                        }
-
-                        //Check rows below current
-                        for (int newRow = row - 1; newRow >=0 ; newRow--) {
-
-                            int moveDownRightCol = col + (row - newRow);
-                            int moveDownLeftCol = col - (row - newRow);
-
-                            //UpRight
-                            if (downRight) {
-                                downRight = bishopCheck(row, col, newRow, moveDownRightCol, white);
-                            }
-
-                            if (downLeft) {
-                                downLeft = bishopCheck(row, col, newRow, moveDownLeftCol, white);
-                            }
-
-                        }
-
+                    //King
+                    else if (getPositionAsChar(board[row][col]) == 'K') {
+                        moveCheck(row, col, row + 1, col, white);
+                        moveCheck(row, col, row + 1, col, white);
+                        moveCheck(row, col, row - 1, col, white);
+                        moveCheck(row, col, row, col+1, white);
+                        moveCheck(row, col, row, col-1, white);
+                        moveCheck(row, col, row + 1, col+1, white);
+                        moveCheck(row, col, row - 1, col+1, white);
+                        moveCheck(row, col, row + 1, col - 1, white);
+                        moveCheck(row, col, row - 1, col - 1, white);
                     }
                 }
+
             }
         }
-        //Black moves
+            //Black moves
         else {
             for (int row = 0; row < 8; row++) {
                 for (int col = 0; col < 8; col++) {
                     //Pawn
-                    if (getPositionAsChar(board[row][col]) == 'p' && row == 6) {
+                    if (getPositionAsChar(board[row][col]) == 'p' && row == 6 && board[row - 1][col] == 0) {
                         Board* move1 = new Board(this, row, col, row - 1, col);
                         Board* move2 = new Board(this, row, col, row - 2, col);
                     }
@@ -212,114 +272,142 @@ public:
 
                     //Knight
                     else if (getPositionAsChar(board[row][col]) == 'n') {
-                        Board* move1 = new Board(this, row, col, row + 2, col - 1);
-                        Board* move2 = new Board(this, row, col, row + 2, col + 1);
-                        Board* move3 = new Board(this, row, col, row - 1, col + 2);
-                        Board* move4 = new Board(this, row, col, row + 1, col + 2);
-                        Board* move5 = new Board(this, row, col, row - 2, col - 1);
-                        Board* move6 = new Board(this, row, col, row - 2, col + 1);
-                        Board* move7 = new Board(this, row, col, row - 1, col - 2);
-                        Board* move8 = new Board(this, row, col, row + 1, col - 2);
+                        moveCheck(row, col, row + 2, col - 1, white);
+                        moveCheck(row, col, row + 2, col + 1, white);
+                        moveCheck(row, col, row - 1, col + 2, white);
+                        moveCheck(row, col, row + 1, col + 2, white);
+                        moveCheck(row, col, row - 2, col - 1, white);
+                        moveCheck(row, col, row - 2, col + 1, white);
+                        moveCheck(row, col, row - 1, col - 2, white);
+                        moveCheck(row, col, row + 1, col - 2, white);
+                    }
+
+                    //Bishop
+                    else if (getPositionAsChar(board[row][col]) == 'b') {
+                        moveBishop(row, col, white);
+                    }
+
+                    //Rook
+                    else if (getPositionAsChar(board[row][col]) == 'r') {
+                        moveRook(row, col, white);
+                    }
+
+                    //Queen
+                    else if (getPositionAsChar(board[row][col]) == 'q') {
+                        moveRook(row, col, white);
+                        moveBishop(row, col, white);
+                    }
+
+                    //King
+                    else if (getPositionAsChar(board[row][col]) == 'k') {
+                        moveCheck(row, col, row + 1, col, white);
+                        moveCheck(row, col, row + 1, col, white);
+                        moveCheck(row, col, row - 1, col, white);
+                        moveCheck(row, col, row, col + 1, white);
+                        moveCheck(row, col, row, col - 1, white);
+                        moveCheck(row, col, row + 1, col + 1, white);
+                        moveCheck(row, col, row - 1, col + 1, white);
+                        moveCheck(row, col, row + 1, col - 1, white);
+                        moveCheck(row, col, row - 1, col - 1, white);
                     }
                 }
             }
         }
+        
     }
-    
-    void addBoardToPossible(Board *possibleBoard) {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                this->possibleMoves[movesChecked] = possibleBoard;
+
+        void addBoardToPossible(Board * possibleBoard) {
+            for (int row = 0; row < 8; row++) {
+                for (int col = 0; col < 8; col++) {
+                    this->possibleMoves[movesChecked] = possibleBoard;
+                }
+            }
+            movesChecked++;
+        }
+
+        void submitTurn(Board * newBoard) {
+            for (int row = 0; row < 8; row++) {
+                for (int col = 0; col < 8; col++) {
+                    this->gameHistory[turn]->board[row][col] = this->board[row][col];
+                    this->board[row][col] = newBoard->board[row][col];
+                }
+            }
+            turn++;
+        }
+
+        char getPositionAsChar(int positionNumber) {
+            if (positionNumber == 0) {
+                return ' ';
+            }
+            else if (positionNumber == 1) {
+                return 'R';
+            }
+            else if (positionNumber == 2) {
+                return 'N';
+            }
+            else if (positionNumber == 3) {
+                return 'B';
+            }
+            else if (positionNumber == 4) {
+                return 'Q';
+            }
+            else if (positionNumber == 5) {
+                return 'K';
+            }
+            else if (positionNumber == 6) {
+                return 'P';
+            }
+            else if (positionNumber == 7) {
+                return 'r';
+            }
+            else if (positionNumber == 8) {
+                return 'n';
+            }
+            else if (positionNumber == 9) {
+                return 'b';
+            }
+            else if (positionNumber == 10) {
+                return 'q';
+            }
+            else if (positionNumber == 11) {
+                return 'k';
+            }
+            else if (positionNumber == 12) {
+                return 'p';
+            }
+            else {
+                return '!';
             }
         }
-        movesChecked++;
-    }
 
-    void submitTurn(Board* newBoard) {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                this->gameHistory[turn]->board[row][col] = this->board[row][col];
-                this->board[row][col] = newBoard->board[row][col];
+        void printBoard() {
+            int tmp;
+            char output[17];
+            output[16] = '\0';
+            for (int row = 7; row >= 0; row--) {
+                for (int col = 0; col < 16; col += 2) {
+                    tmp = board[row][col / 2];
+                    output[col] = getPositionAsChar(tmp);
+                    output[col + 1] = '|';
+                }
+                printf("%s", output);
+                printf("\n----------------\n");
+            }
+            printf("\n\n");
+        }
+
+        void printAllPossibleBoards() {
+            for (int boardNo = 0; boardNo < movesChecked; boardNo++) {
+                possibleMoves[boardNo]->printBoard();
             }
         }
-        turn++;
+    };
+
+    int main()
+    {
+        Board* board = new Board();
+        board->getMoves(true);
+        board->printAllPossibleBoards();
+
+        return 0;
     }
-
-    char getPositionAsChar(int positionNumber) {
-        if (positionNumber == 0) {
-            return ' ';
-        }
-        else if (positionNumber == 1) {
-            return 'R';
-        }
-        else if (positionNumber == 2) {
-            return 'N';
-        }
-        else if (positionNumber == 3) {
-            return 'B';
-        }
-        else if (positionNumber == 4) {
-            return 'Q';
-        }
-        else if (positionNumber == 5) {
-            return 'K';
-        }
-        else if (positionNumber == 6) {
-            return 'P';
-        }
-        else if (positionNumber == 7) {
-            return 'r';
-        }
-        else if (positionNumber == 8) {
-            return 'n';
-        }
-        else if (positionNumber == 9) {
-            return 'b';
-        }
-        else if (positionNumber == 10) {
-            return 'q';
-        }
-        else if (positionNumber == 11) {
-            return 'k';
-        }
-        else if (positionNumber == 12) {
-            return 'p';
-        }
-        else {
-            return '!';
-        }
-    }
-
-    void printBoard() {
-        int tmp;
-        char output[17];
-        output[16] = '\0';
-        for (int row = 7; row >= 0; row--) {
-            for (int col = 0; col < 16; col+=2) {
-                tmp = board[row][col/2];
-                output[col] = getPositionAsChar(tmp);
-                output[col + 1] = '|';
-            }
-            printf("%s", output);
-            printf("\n----------------\n");
-        }
-        printf("\n\n");
-    }
-
-    void printAllPossibleBoards() {
-        for (int boardNo = 0; boardNo < movesChecked; boardNo++) {
-            possibleMoves[boardNo]->printBoard();
-        }
-    }
-};
-
-
-int main()
-{
-    Board* board = new Board();
-    board->getMoves(true);
-    board->printAllPossibleBoards();
-
-    return 0;
-}
-
