@@ -3,8 +3,23 @@
   C:\Users\rhysm\GitProjects\ChessAI\ChessAI_VisualStudio\ChessAI_VisualStudio>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\bin\nvcc.exe" -gencode=arch=compute_30,code=\"sm_30,compute_30\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\bin\HostX86\x64" -x cu  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include"  -G   --keep-dir x64\Debug -maxrregcount=0  --machine 64 --compile -cudart static  -g   -DWIN32 -DWIN64 -D_DEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /Fdx64\Debug\vc142.pdb /FS /Zi /RTC1 /MDd " -o x64\Debug\kernel.cu.obj "C:\Users\rhysm\GitProjects\ChessAI\ChessAI_VisualStudio\ChessAI_VisualStudio\kernel.cu" 
 C:/Users/rhysm/GitProjects/ChessAI/ChessAI_VisualStudio/ChessAI_VisualStudio/kernel.cu(65): warning : missing return statement at end of non-void function "Board::moveCheck"
   
+C:/Users/rhysm/GitProjects/ChessAI/ChessAI_VisualStudio/ChessAI_VisualStudio/kernel.cu(417): warning : missing return statement at end of non-void function "GPU_Functions::memTransferArray"
+  
+C:/Users/rhysm/GitProjects/ChessAI/ChessAI_VisualStudio/ChessAI_VisualStudio/kernel.cu(421): warning : variable "dev_a" was declared but never referenced
+  
+C:/Users/rhysm/GitProjects/ChessAI/ChessAI_VisualStudio/ChessAI_VisualStudio/kernel.cu(422): warning : variable "dev_b" was declared but never referenced
+  
+C:/Users/rhysm/GitProjects/ChessAI/ChessAI_VisualStudio/ChessAI_VisualStudio/kernel.cu(423): warning : variable "dev_c" was declared but never referenced
+  
+C:/Users/rhysm/GitProjects/ChessAI/ChessAI_VisualStudio/ChessAI_VisualStudio/kernel.cu(562): warning : variable "b" was declared but never referenced
+  
+C:/Users/rhysm/GitProjects/ChessAI/ChessAI_VisualStudio/ChessAI_VisualStudio/kernel.cu(569): warning : variable "c" was declared but never referenced
+  
 C:/Users/rhysm/GitProjects/ChessAI/ChessAI_VisualStudio/ChessAI_VisualStudio/kernel.cu(65): warning : missing return statement at end of non-void function "Board::moveCheck"
   
+C:/Users/rhysm/GitProjects/ChessAI/ChessAI_VisualStudio/ChessAI_VisualStudio/kernel.cu(417): warning : missing return statement at end of non-void function "GPU_Functions::memTransferArray"
+  
   kernel.cu
-C:\Users\rhysm\GitProjects\ChessAI\ChessAI_VisualStudio\ChessAI_VisualStudio\kernel.cu(65): warning C4715: 'Board::moveCheck': not all control paths return a value
+C:/Users/rhysm/GitProjects/ChessAI/ChessAI_VisualStudio/ChessAI_VisualStudio/kernel.cu(484): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'double'
+C:/Users/rhysm/GitProjects/ChessAI/ChessAI_VisualStudio/ChessAI_VisualStudio/kernel.cu(493): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'double'
   ChessAI_VisualStudio.vcxproj -> C:\Users\rhysm\GitProjects\ChessAI\ChessAI_VisualStudio\x64\Debug\ChessAI_VisualStudio.exe

@@ -6,11 +6,11 @@
 #include <stdlib.h>
 
 
-class Board {
+    class Board {
 private:
     int turn = 0;
     int movesChecked = 0;
-    Board* possibleMoves[1000];
+    Board* possibleMoves[500];
     Board* gameHistory[300];
 
     //Move a piece and create a new board
@@ -159,7 +159,7 @@ public:
         {0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0},
-        {7,8,9,10,11,0,0,0},
+        {0,0,0,0,0,0,0,0},
         {12,12,12,12,12,12,12,12},
         {7,8,9,10,11,9,8,7} };
 
@@ -403,11 +403,160 @@ public:
         }
     };
 
+    class GPU_Functions {
+    private:
+        static float* memTransferArray(float* a, int a_rows, int a_cols, float* dev_a){
+            //cudaMalloc((void**)&dev_a, sizeof(float)*);
+        }
+        
+        static void ()
+    public:
+        static void matMult(float** a, float** b, float** c, int a_rows, int a_cols, int b_cols) {
+            float* dev_a = 0;
+            float* dev_b = 0;
+            float* dev_c = 0;
+
+            float* host_a
+            //memTransferArray(a);
+            
+        }
+    };
+
+
+    class Layer {
+    private:
+        int neuronsCurrentLayer = 0;
+        int neuronsNextLayer = 0;
+        int numberOfWeights = 0;
+        float** weightsArray;
+        float* biasArray;
+        float* outputArray;
+
+        //virtual void computeLayer() = 0;
+
+        void swishActivationFunction() {
+
+        }
+
+    public:
+        Layer(int neuronsCurrentLayer) {
+            this->neuronsCurrentLayer = neuronsCurrentLayer;
+        }
+
+        void calculateOutput(int* inputArr) {
+
+        }
+
+        void generateArrays(int neuronsNextLayer) {
+            this->neuronsNextLayer = neuronsNextLayer;
+
+            //Allocate Memory for weightArray
+            this->numberOfWeights = neuronsCurrentLayer * neuronsNextLayer;
+            weightsArray = (float**)malloc(sizeof(float*) * neuronsCurrentLayer);
+            for (int i = 0; i < neuronsNextLayer; i++) {
+                weightsArray[i] = (float*)malloc(sizeof(float) * neuronsNextLayer);
+            }
+
+            //Allocate Memory for biasArray
+            biasArray = (float*)malloc(sizeof(float) * neuronsNextLayer);
+
+            //Initialise weights and bias to 0
+            for (int j = 0; j < neuronsNextLayer; j++) {
+                for (int i = 0; i < neuronsCurrentLayer; i++){
+                    weightsArray[i][j] = 0;
+                }
+                biasArray[j] = 0;
+            }
+        }
+
+        int getNeuronCount() {
+            return neuronsCurrentLayer;
+        }
+
+        void printWeightsArray() {
+            for (int i = 0; i < neuronsCurrentLayer; i++) {
+                for (int j = 0; j < neuronsNextLayer; j++) {
+                    printf("%d\t", weightsArray[i][j]);
+                }
+                printf("\n");
+            }
+            printf("\n");
+        }
+
+        void printBiasArray() {
+            for (int i = 0; i < neuronsNextLayer; i++) {
+                printf("%d\n", biasArray[i]);
+            }
+            printf("\n");
+        }
+};
+
+
+    class FullyConnectedLayer : public Layer {
+    public:
+        FullyConnectedLayer(int neurons) : Layer(neurons){}
+    };
+
+    class NeuralNetwork {
+    private:
+        int numberOfLayers = 0;
+        Layer** layersArray = (Layer**)malloc(sizeof(Layer));
+
+
+    public:
+        void addLayer(Layer* newLayer) {
+            if (numberOfLayers == 0) {\
+                numberOfLayers++;
+                layersArray[0] = newLayer;
+            }
+            else {
+                //Resize the layers array
+                Layer** tmpArray = (Layer**)malloc(sizeof(Layer)*numberOfLayers);
+                for (int i = 0; i < numberOfLayers; i++) {
+                    tmpArray[i] = layersArray[i];
+                }
+
+                free(layersArray);
+                numberOfLayers++;
+                layersArray = (Layer**)malloc(sizeof(layersArray) * numberOfLayers);
+
+                for (int i = 0; i < numberOfLayers-1; i++) {
+                     layersArray[i] = tmpArray[i];
+                }
+
+                //Add new layer
+                layersArray[numberOfLayers-1] = newLayer;
+
+                //Generate weights for previous layer
+                layersArray[numberOfLayers - 2]->generateArrays(newLayer->getNeuronCount());
+            }
+        }
+
+        void compute(int* arr) {
+
+        }
+
+        void printLayerWeights(int layerNumber) {
+            this->layersArray[layerNumber]->printWeightsArray();
+        }
+
+        void printLayerBias(int layerNumber) {
+            this->layersArray[layerNumber]->printBiasArray();
+        }
+    };
+
     int main()
     {
-        Board* board = new Board();
-        board->getMoves(true);
-        board->printAllPossibleBoards();
+
+        //Board* board = new Board();
+        //board->getMoves(true);
+        //board->printAllPossibleBoards();
+        //NeuralNetwork* test = new NeuralNetwork();
+        //test->addLayer(new FullyConnectedLayer(5));
+        //test->addLayer(new FullyConnectedLayer(10));
+        //test->printLayerBias(0);
+        //test->printLayerWeights(0);
+        
 
         return 0;
     }
