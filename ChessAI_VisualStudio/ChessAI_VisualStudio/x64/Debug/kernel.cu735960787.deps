@@ -75,3 +75,6 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include\vector_function
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include\vector_functions.hpp
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include\vector_types.h
 C:\Users\rhysm\GitProjects\ChessAI\ChessAI_VisualStudio\ChessAI_VisualStudio\kernel.cu
+C:\Users\rhysm\GitProjects\ChessAI\ChessAI_VisualStudio\ChessAI_VisualStudio\src\headers\board.h
+C:\Users\rhysm\GitProjects\ChessAI\ChessAI_VisualStudio\ChessAI_VisualStudio\src\headers\layer.h
+C:\Users\rhysm\GitProjects\ChessAI\ChessAI_VisualStudio\ChessAI_VisualStudio\src\headers\matrix.h
