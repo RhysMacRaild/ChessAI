@@ -1,38 +1,26 @@
 #include "layer.h";
 
-    void Layer::swishActivationFunction() {
-
-    }
-
     Layer::Layer(int neuronsCurrentLayer) {
         this->neuronsCurrentLayer = neuronsCurrentLayer;
     }
 
-    void Layer::calculateWeightsBias(Matrix* input) {
-        this->inputMatrix = new Matrix(input);
-        comp->matMult(input, weightsMatrix, outputMatrix);
-        comp->matMult(outputMatrix, biasMatrix, outputMatrix);
-        this->calculateOutput();
-    }
-
-    void Layer::calculateOutput() {
-        Matrix* denominator = new Matrix(outputMatrix->getRows(), outputMatrix->getCols());
-        comp->matExponential(outputMatrix, false, denominator);
-        comp->matScalarAdd(denominator, 1.0f, denominator);
-        comp->matDivision(outputMatrix, denominator, activatedOutputMatrix);
+    Layer::Layer(int neuronsCurrentLayer, Activation* func) {
+        this->neuronsCurrentLayer = neuronsCurrentLayer;
+        this->activationFunc = func;
     }
 
     void Layer::generateArrays(int neuronsNextLayer) {
         this->neuronsNextLayer = neuronsNextLayer;
-        //Alocate Memory for outputs
-        this->activatedOutputMatrix->setMatrixDims(neuronsCurrentLayer, weightsMatrix->getCols());
-        this->outputMatrix->setMatrixDims(neuronsCurrentLayer, weightsMatrix->getCols());
 
         //Allocate Memory for weightArray
         this->weightsMatrix->setMatrixDims(neuronsCurrentLayer, neuronsNextLayer);
 
         //Allocate Memory for biasMatrix
         biasMatrix->setMatrixDims(1, neuronsNextLayer);
+
+        //Alocate Memory for outputs
+        this->activatedOutputMatrix->setMatrixDims(1,neuronsNextLayer);
+        this->outputMatrix->setMatrixDims(1, neuronsNextLayer);
 
         //Initialise weights and bias to 0
         for (int j = 0; j < neuronsNextLayer; j++) {

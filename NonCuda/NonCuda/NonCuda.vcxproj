@@ -24,14 +24,18 @@
     <ClCompile Include="src\computations.cpp" />
     <ClCompile Include="src\layer.cpp" />
     <ClCompile Include="src\matrix.cpp" />
+    <ClCompile Include="src\fullyConnectedLayer.cpp" />
+    <ClCompile Include="src\neuralNetwork.cpp" />
     <ClCompile Include="src\swishActivation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\headers\activationFunction.h" />
     <ClInclude Include="src\headers\board.h" />
     <ClInclude Include="src\headers\computations.h" />
+    <ClInclude Include="src\headers\fullyConnectedLayer.h" />
     <ClInclude Include="src\headers\layer.h" />
     <ClInclude Include="src\headers\matrix.h" />
+    <ClInclude Include="src\headers\neuralNetwork.h" />
     <ClInclude Include="src\headers\swishActivation.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

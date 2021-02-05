@@ -1,9 +1,5 @@
-﻿  layer.cpp
-C:\Users\rhysm\GitProjects\ChessAI\NonCuda\NonCuda\src\layer.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+﻿  neuralNetwork.cpp
+C:\Users\rhysm\GitProjects\ChessAI\NonCuda\NonCuda\src\neuralNetwork.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\rhysm\GitProjects\ChessAI\NonCuda\NonCuda\src\headers\layer.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  swishActivation.cpp
-C:\Users\rhysm\GitProjects\ChessAI\NonCuda\NonCuda\src\swishActivation.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\rhysm\GitProjects\ChessAI\NonCuda\NonCuda\src\headers\swishActivation.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\rhysm\GitProjects\ChessAI\NonCuda\NonCuda\src\swishActivation.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Generating Code...
+C:\Users\rhysm\GitProjects\ChessAI\NonCuda\NonCuda\src\headers\layer.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   NonCuda.vcxproj -> C:\Users\rhysm\GitProjects\ChessAI\NonCuda\x64\Debug\NonCuda.exe
