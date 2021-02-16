@@ -39,6 +39,9 @@
     <ClCompile Include="src\neuralNetwork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\crossEntropyLoss.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\headers\board.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\headers\neuralNetwork.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\headers\lossFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

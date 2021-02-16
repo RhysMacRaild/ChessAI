@@ -22,6 +22,7 @@
     <ClCompile Include="kernel.cpp" />
     <ClCompile Include="src\board.cpp" />
     <ClCompile Include="src\computations.cpp" />
+    <ClCompile Include="src\crossEntropyLoss.cpp" />
     <ClCompile Include="src\layer.cpp" />
     <ClCompile Include="src\matrix.cpp" />
     <ClCompile Include="src\fullyConnectedLayer.cpp" />
@@ -34,6 +35,7 @@
     <ClInclude Include="src\headers\computations.h" />
     <ClInclude Include="src\headers\fullyConnectedLayer.h" />
     <ClInclude Include="src\headers\layer.h" />
+    <ClInclude Include="src\headers\lossFunction.h" />
     <ClInclude Include="src\headers\matrix.h" />
     <ClInclude Include="src\headers\neuralNetwork.h" />
     <ClInclude Include="src\headers\swishActivation.h" />

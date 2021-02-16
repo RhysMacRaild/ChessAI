@@ -9,13 +9,13 @@
 int main()
 {
 
-    //Board* board = new Board();
-    //board->getMoves(true);
-    //board->printAllPossibleBoards();
+    Board* board = new Board();
+    board->getMoves(true);
+    board->printAllPossibleBoards();
 
     //test->printLayerBias(0);
     //test->printLayerWeights(0);
-    
+    //
     float tmpA[2][2] = { {1.0,2.0},{3.0,4.0} };
     float tmpB[2][3] = { {5.0,7.0,9.0},{6.0,8.0,10.0} };
     
@@ -35,6 +35,7 @@ int main()
     NeuralNetwork* test = new NeuralNetwork();
     Swish* swish = new Swish();
     test->addLayer(new FullyConnectedLayer(4, swish)); //Input layer
+    test->addLayer(new FullyConnectedLayer(100, swish));
     test->addOutputLayer(new FullyConnectedLayer(4, swish)); //Output Layer
     test->computeForwardPass(A);
     Matrix* output = test->getOutput();

@@ -2,6 +2,18 @@
 #include "Matrix.h";
 #include <math.h>;
 
+void Computations::vectorInverse(Matrix* input, Matrix* output){
+	for (int i = 0; i < input->getRows(); i++) {
+		output->arr[i][0] = 1 / input->arr[i][0];
+	}
+}
+
+void Computations::vectorDevision(Matrix* numerator, Matrix* devisor, Matrix* output) {
+	for (int i = 0; i < numerator->getRows(); i++) {
+		output->arr[i][0] = numerator->arr[i][0] / devisor->arr[i][0];
+	}
+}
+
 void Computations::matMult(Matrix* inputA, Matrix* inputB, Matrix* output) {
 	float tmp = 0;
 	for (int i = 0; i < inputA->getRows(); i++) {
@@ -57,5 +69,11 @@ void Computations::matAdd(Matrix* inputA, Matrix* inputB, Matrix* output) {
 			for (int j = 0; j < inputA->getCols(); j++) {
 				output->arr[i][j] = inputA->arr[i][j] + scalar;
 			}
+		}
+	}
+
+	void Computations::subtractVector(Matrix* input, float valueToSubtractFrom, Matrix* output) {
+		for (int i = 0; i < input->getRows(); i++) {
+			output->arr[i][0] = valueToSubtractFrom - input->arr[i][0];
 		}
 	}
