@@ -7,4 +7,7 @@ public:
     void forwardStep(Matrix* input);
     void calculateWeightsBias(Matrix* inputMatrix); //z
     void calculateActivation(); //y_hat
+
+    void calculateDerivatives();
+
 };

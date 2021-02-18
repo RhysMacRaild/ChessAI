@@ -77,3 +77,9 @@ void Computations::matAdd(Matrix* inputA, Matrix* inputB, Matrix* output) {
 			output->arr[i][0] = valueToSubtractFrom - input->arr[i][0];
 		}
 	}
+
+	void Computations::logVector(Matrix* input, Matrix* output) {
+		for (int i = 0; i < input->getRows(); i++) {
+			output->arr[i][0] = log(input->arr[i][0]);
+		}
+	}

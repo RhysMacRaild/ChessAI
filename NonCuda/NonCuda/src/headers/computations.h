@@ -12,5 +12,6 @@ public:
 	static void subtractVector(Matrix* input, float valueToSubtractFrom, Matrix* output);
 	static void vectorDevision(Matrix* numerator, Matrix* devisor, Matrix* ouput);
 	static void vectorInverse(Matrix* input, Matrix* output);
+	static void logVector(Matrix* input, Matrix* output);
 	static float* sumVector(Matrix* input);
 };

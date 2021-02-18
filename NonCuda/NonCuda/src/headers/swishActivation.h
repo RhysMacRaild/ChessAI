@@ -6,4 +6,5 @@ class Swish :public Activation {
 public:
 	Computations* comp = new Computations();
 	void Activation::calculate(Matrix* input, Matrix* output);
+	void Activation::calculateDerivateWithRespectToInput(Matrix* input, Matrix* output);
 };
